@@ -11,17 +11,29 @@ namespace Console
     {
         static void Main(string[] args)
         {
-            CarManager carManager = new CarManager(new EfCarDal());
-            foreach (var car in carManager.GetCarsByDailyPrice(120))
+            //Data Transformation Object-DTO
+            CarTest();
+            //LeaseTest();
+
+        }
+
+        private static void LeaseTest()
+        {
+            LeaseManager leaseManager = new LeaseManager(new EfLeaseDal());
+            foreach (var lease in leaseManager.GetAll())
             {
-                System.Console.WriteLine("{0}-----{1}",car.Description,car.DailyPrice);
+                System.Console.WriteLine(lease.LeaseDate);
+            }
+        }
+
+        private static void CarTest()
+        {
+            CarManager carManager = new CarManager(new EfCarDal());
+            foreach (var car in carManager.GetCarDetails())
+            {
+                System.Console.WriteLine(car.Description+"---"+car.LeaseDate+" "+"Tarihinde kiralandı");
 
             }
-
-
-
-
-
-        }    
+        }
     }
 }
