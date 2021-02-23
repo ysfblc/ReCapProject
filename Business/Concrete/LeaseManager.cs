@@ -1,4 +1,7 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -16,15 +19,27 @@ namespace Business.Concrete
             _leaseDal = leaseDal;
         }
 
-        public List<Lease> GetAll()
+        public IDataResult<List<Lease>> GetAll()
         {
             //iş kodlarım
-            return _leaseDal.GetAll();
+            return new SuccessDataResult<List<Lease>>(_leaseDal.GetAll());
+            
         }
 
-        public Lease GetById(int leaseId)
+        public IDataResult<List<Lease>> GetById(int leaseId)
         {
-            return _leaseDal.Get(l => l.LeaseId == leaseId);
+            return new SuccessDataResult<List<Lease>>(_leaseDal.GetAll(l => l.LeaseId == leaseId),(Messages.CarsListed));
+        }
+
+        public IResult Add(Lease lease)
+        {
+            var result = _leaseDal.Get(r => r.CarId == lease.CarId && r.ReturnDate == null);
+            if (result != null)
+            {
+                return new ErrorResult(Messages.RentFail);
+            }
+            _leaseDal.Add(lease);
+            return new SuccessResult(Messages.RentSuccess);
         }
     }
 }

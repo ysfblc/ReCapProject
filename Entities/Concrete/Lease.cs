@@ -8,7 +8,9 @@ namespace Entities.Concrete
     public class Lease:IEntity
     {
         public int CarId { get; set; }
+        public int CustomerId { get; set; }
         public int LeaseId { get; set; }
         public DateTime LeaseDate { get; set; }
+        public DateTime ReturnDate { get; set; }
     }
 }

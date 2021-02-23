@@ -7,12 +7,13 @@ using System.Text;
 
 namespace Business.Abstract
 {
-    public interface ILeaseService
+    interface IUserServices
     {
-        IDataResult<List<Lease>> GetAll();
-        IDataResult<List<Lease>> GetById(int leaseId);
-        IResult Add(Lease lease);
+        IDataResult<List<User>> GetById(int userId);
 
+        IResult Add(User user);
+        IResult Find(User user);
+        IResult Delete(User user);
 
     }
 }
